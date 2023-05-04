@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using LePortfolioApi.Seeders;
 using LePortfolioApi.Extensions;
 using LePortfolioApi.Data;
+using LePortfolioApi.Profiles;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<EfContext>(options =>
@@ -11,7 +12,7 @@ builder.Services.AddDbContext<EfContext>(options =>
     options.UseSqlServer(connStr ?? throw new InvalidOperationException("Connection string 'Ef' not found."));
 });
 
-
+builder.Services.AddAutoMapper(typeof(Profiles));
 builder.Services.AddControllers();
 builder.Services.AddTransient<IDatabaseSeeder, DatabaseSeeder>();
 builder.Services.AddEndpointsApiExplorer();
