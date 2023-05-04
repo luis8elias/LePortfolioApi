@@ -5,6 +5,9 @@ using LePortfolioApi.Models;
 using LePortfolioApi.Util;
 using LePortfolioApi.ParamDtos;
 using AutoMapper;
+using FluentValidation;
+using AutoMapper.QueryableExtensions;
+using LePortfolioApi.Dtos;
 
 namespace LePortfolioApi.Controllers
 {
@@ -14,11 +17,13 @@ namespace LePortfolioApi.Controllers
     {
         private readonly EfContext _context;
         private readonly IMapper _mapper;
+        private IValidator<SkillParamDto> _validator;
 
-        public SkillsController(EfContext context , IMapper mapper)
+        public SkillsController(EfContext context , IMapper mapper , IValidator<SkillParamDto> validator )
         {
             _context = context;
             _mapper = mapper;
+            _validator = validator;
         }
 
         // GET: api/Skills
@@ -88,12 +93,22 @@ namespace LePortfolioApi.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost("/Skills")]
         [ProducesResponseType(typeof(BasicResponse<Skill>), 200)]
+        [ProducesResponseType(typeof(BasicResponse<List<ValidationError>>), 400)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
         public async Task<ActionResult<BasicResponse<Skill>>> PostSkill([FromBody] SkillParamDto skill)
         {
             try
             {
+                var validationResult = _validator.Validate(skill);
+                var errors = validationResult.Errors.AsQueryable().ProjectTo<ValidationError>(_mapper.ConfigurationProvider).ToList();
+                if (! validationResult.IsValid) 
+                {
+                    return BadRequest(ResponseManager.ErrorWithValidations("Petición incorrecta", errors));
+
+                }
+
+
                 var skillModel = _mapper.Map<SkillParamDto, Skill>(skill);
                 _context.Skills.Add(skillModel);
                 await _context.SaveChangesAsync();
@@ -117,6 +132,14 @@ namespace LePortfolioApi.Controllers
             if (SkillNotExists(id))
             {
                 return NotFound(ResponseManager.NotFound("No existe un skill con este id"));
+            }
+
+            var validationResult = _validator.Validate(skill);
+            var errors = validationResult.Errors.AsQueryable().ProjectTo<ValidationError>(_mapper.ConfigurationProvider).ToList();
+            if (!validationResult.IsValid)
+            {
+                return BadRequest(ResponseManager.ErrorWithValidations("Petición incorrecta", errors));
+
             }
 
             var skillModel = _mapper.Map<SkillParamDto, Skill>(skill);

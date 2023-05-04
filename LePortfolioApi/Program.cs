@@ -4,6 +4,9 @@ using LePortfolioApi.Seeders;
 using LePortfolioApi.Extensions;
 using LePortfolioApi.Data;
 using LePortfolioApi.Profiles;
+using FluentValidation;
+using System;
+using LePortfolioApi.Validations;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<EfContext>(options =>
@@ -13,6 +16,7 @@ builder.Services.AddDbContext<EfContext>(options =>
 });
 
 builder.Services.AddAutoMapper(typeof(Profiles));
+builder.Services.AddValidatorsFromAssemblyContaining(typeof(Validations));
 builder.Services.AddControllers();
 builder.Services.AddTransient<IDatabaseSeeder, DatabaseSeeder>();
 builder.Services.AddEndpointsApiExplorer();

@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using FluentValidation.Results;
+using LePortfolioApi.Dtos;
 using LePortfolioApi.Models;
 using LePortfolioApi.ParamDtos;
 
@@ -9,6 +11,8 @@ namespace LePortfolioApi.Profiles
 
         public MapProfile()
         {
+
+            CreateMap<ValidationFailure, ValidationError>();
             CreateMap<SkillParamDto, Skill>();
         }
             

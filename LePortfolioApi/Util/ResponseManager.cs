@@ -1,4 +1,6 @@
-﻿namespace LePortfolioApi.Util
+﻿using LePortfolioApi.Dtos;
+
+namespace LePortfolioApi.Util
 {
     public class ResponseManager
     {
@@ -35,6 +37,17 @@
             {
                 Message = message,
                 Success = false,
+            };
+        }
+
+        public static BasicResponse ErrorWithValidations(string message , object errors)
+        {
+            return new BasicResponse<object>
+            {
+                Message = message,
+                Success = false,
+                Model = errors
+                
             };
         }
 
