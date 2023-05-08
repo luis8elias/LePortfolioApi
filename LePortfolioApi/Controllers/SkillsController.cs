@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using LePortfolioApi.Data;
 using LePortfolioApi.Models;
 using LePortfolioApi.Util;
 using LePortfolioApi.ParamDtos;
 using AutoMapper;
 using LePortfolioApi.Dtos;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LePortfolioApi.Controllers
 {
@@ -16,7 +16,7 @@ namespace LePortfolioApi.Controllers
         private readonly EfContext _context;
         private readonly IMapper _mapper;
 
-        public SkillsController(EfContext context , IMapper mapper)
+        public SkillsController(EfContext context , IMapper mapper )
         {
             _context = context;
             _mapper = mapper;
@@ -37,18 +37,18 @@ namespace LePortfolioApi.Controllers
 
                 if (skills == null)
                 {
-                    return NotFound(ResponseManager.NotFound("Sin Skills"));
+                    return ResponseManager.NotFound("Sin Skills");
                 }
                
 
-                return Ok(ResponseManager.OK("Listado de skills", skills));
+                return ResponseManager.OK("Listado de skills", skills);
 
 
             }
             catch (Exception e)
             {
                 
-                return BadRequest(ResponseManager.Error(e));
+                return ResponseManager.Error(e);
                 throw;
             }
 
@@ -66,21 +66,21 @@ namespace LePortfolioApi.Controllers
             {
                 if (_context.Skills == null)
                 {
-                    return NotFound(ResponseManager.NotFound("Sin Skills"));
+                    return ResponseManager.NotFound("Sin Skills");
                 }
                 var skill = await _context.Skills.FindAsync(id);
 
                 if (skill == null)
                 {
-                    return NotFound(ResponseManager.NotFound("No se econtró el skill"));
+                    return ResponseManager.NotFound("No existe un skill con este id");
                 }
 
-                return Ok(ResponseManager.OK("Detalle de skill", skill));
+                return ResponseManager.OK("Detalle de skill", skill);
             }
             catch (Exception e)
             {
 
-                return BadRequest(ResponseManager.Error(e));
+                return ResponseManager.Error(e);
                 throw;
             }
         }
@@ -88,7 +88,7 @@ namespace LePortfolioApi.Controllers
         //// POST: api/Skills
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost("/Skills")]
-        [ProducesResponseType(typeof(BasicResponse<Skill>), 200)]
+        [ProducesResponseType(typeof(BasicResponse<Skill>), 201)]
         [ProducesResponseType(typeof(BasicResponse<List<ValidationError>>), 400)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
@@ -101,12 +101,13 @@ namespace LePortfolioApi.Controllers
                 _context.Skills.Add(skillModel);
                 await _context.SaveChangesAsync();
 
-                return CreatedAtAction("GetSkillById", new { id =  skillModel.Id  } , ResponseManager.OK("Skill guardada", skillModel));
+                return  ResponseManager.Created("Skill guardada", skillModel);
             }
             catch (Exception e)
             {
 
-                return BadRequest(ResponseManager.Error(e));
+                return ResponseManager.Error(e);
+
                 throw;
             }
         }
@@ -119,7 +120,7 @@ namespace LePortfolioApi.Controllers
         {
             if (SkillNotExists(id))
             {
-                return NotFound(ResponseManager.NotFound("No existe un skill con este id"));
+                return ResponseManager.NotFound("No existe un skill con este id");
             }
            
 
@@ -130,11 +131,11 @@ namespace LePortfolioApi.Controllers
             try
             {
                 await _context.SaveChangesAsync();
-                return Ok(ResponseManager.OK("Skill actualizada", skillModel));
+                return ResponseManager.OK("Skill actualizada", skillModel);
             }
             catch (Exception e)
             {
-                return BadRequest(ResponseManager.Error(e));
+                return ResponseManager.Error(e);
                 throw;
             }
             
@@ -147,20 +148,29 @@ namespace LePortfolioApi.Controllers
         [ProducesResponseType(404)]
         public async Task<IActionResult> DeleteSkill(int id)
         {
-            if (_context.Skills == null)
+            try
             {
-                return NotFound(ResponseManager.NotFound("Sin Skills"));
+                if (_context.Skills == null)
+                {
+                    return ResponseManager.NotFound("Sin Skills");
+                }
+                var skill = await _context.Skills.FindAsync(id);
+                if (skill == null)
+                {
+                    return ResponseManager.NotFound("No existe un skill con este id");
+                }
+
+                _context.Skills.Remove(skill);
+                await _context.SaveChangesAsync();
+
+                return ResponseManager.OK("Skill eliminada", null);
+
             }
-            var skill = await _context.Skills.FindAsync(id);
-            if (skill == null)
+            catch (Exception e)
             {
-                return NotFound(ResponseManager.NotFound("No existe un skill con este id"));
+                return ResponseManager.Error(e);
+                throw;
             }
-
-            _context.Skills.Remove(skill);
-            await _context.SaveChangesAsync();
-
-            return Ok(ResponseManager.OK("Skill eliminada", null)) ;
         }
 
         private bool SkillNotExists(int id)

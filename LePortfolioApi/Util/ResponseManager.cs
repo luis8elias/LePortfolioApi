@@ -1,52 +1,63 @@
-﻿namespace LePortfolioApi.Util
+﻿
+using Microsoft.AspNetCore.Mvc;
+
+
+namespace LePortfolioApi.Util
 {
     public class ResponseManager
     {
-        public static BasicResponse Error(Exception ex)
+        public static ActionResult Error(Exception e)
         {
-            return new BasicResponse
+            return new BadRequestObjectResult(new BasicResponse
             {
-                Message = ex.Message,
+                Message = e.Message,
                 Success = false,
-            };
-        }
-        public static BasicResponse BadRequest(string exception)
-        {
-            return new BasicResponse
-            {
-                Message = exception,
-                Success = false,
-            };
+            });
         }
 
-        public static BasicResponse<object> OK(string message, object? response)
+        public static ActionResult OK(string message, object? response)
         {
-            return new BasicResponse<object>
+
+            return new OkObjectResult(new BasicResponse<object>
             {
                 Message = message,
                 Success = true,
                 Model = response
-            };
+            });
         }
 
-        public static BasicResponse NotFound(string message)
+        public static ActionResult NotFound(string message)
         {
-            return new BasicResponse
+            return new NotFoundObjectResult( new BasicResponse
             {
                 Message = message,
                 Success = false,
-            };
+            });
         }
 
-        public static BasicResponse ErrorWithValidations(string message , object errors)
+        public static ActionResult ErrorWithValidations(string message, object errors)
         {
-            return new BasicResponse<object>
+
+            return new BadRequestObjectResult(new BasicResponse<object>
             {
                 Message = message,
                 Success = false,
                 Model = errors
-                
-            };
+
+            });
+        }
+
+        public static ActionResult Created(string message, object? response)
+        {
+
+            return new ObjectResult(new BasicResponse<object>
+            {
+                Message = message,
+                Success = true,
+                Model = response
+
+            }) { StatusCode = 201 };
+
         }
 
     } 

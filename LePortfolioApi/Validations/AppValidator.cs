@@ -20,7 +20,7 @@ namespace LePortfolioApi.Validations
                 });
             }
 
-            return new BadRequestObjectResult(ResponseManager.ErrorWithValidations("Petición incorrecta", errors));
+            return ResponseManager.ErrorWithValidations("Petición incorrecta", errors);
         }
     }
 }
