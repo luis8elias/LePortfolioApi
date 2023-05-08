@@ -5,7 +5,6 @@ using LePortfolioApi.Models;
 using LePortfolioApi.Util;
 using LePortfolioApi.ParamDtos;
 using AutoMapper;
-using FluentValidation;
 using LePortfolioApi.Dtos;
 
 namespace LePortfolioApi.Controllers
@@ -17,7 +16,7 @@ namespace LePortfolioApi.Controllers
         private readonly EfContext _context;
         private readonly IMapper _mapper;
 
-        public SkillsController(EfContext context , IMapper mapper ,  )
+        public SkillsController(EfContext context , IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
