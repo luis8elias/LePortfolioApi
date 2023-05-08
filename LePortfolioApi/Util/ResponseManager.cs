@@ -1,6 +1,4 @@
-﻿using LePortfolioApi.Dtos;
-
-namespace LePortfolioApi.Util
+﻿namespace LePortfolioApi.Util
 {
     public class ResponseManager
     {

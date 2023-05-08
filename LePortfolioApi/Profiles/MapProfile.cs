@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using FluentValidation.Results;
-using LePortfolioApi.Dtos;
 using LePortfolioApi.Models;
 using LePortfolioApi.ParamDtos;
 

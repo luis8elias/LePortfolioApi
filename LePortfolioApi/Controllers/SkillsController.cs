@@ -6,7 +6,6 @@ using LePortfolioApi.Util;
 using LePortfolioApi.ParamDtos;
 using AutoMapper;
 using FluentValidation;
-using AutoMapper.QueryableExtensions;
 using LePortfolioApi.Dtos;
 
 namespace LePortfolioApi.Controllers
@@ -17,13 +16,11 @@ namespace LePortfolioApi.Controllers
     {
         private readonly EfContext _context;
         private readonly IMapper _mapper;
-        private IValidator<SkillParamDto> _validator;
 
-        public SkillsController(EfContext context , IMapper mapper , IValidator<SkillParamDto> validator )
+        public SkillsController(EfContext context , IMapper mapper ,  )
         {
             _context = context;
             _mapper = mapper;
-            _validator = validator;
         }
 
         // GET: api/Skills

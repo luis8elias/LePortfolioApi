@@ -1,6 +1,5 @@
 ﻿
 using FluentValidation;
-using LePortfolioApi.Models;
 using LePortfolioApi.ParamDtos;
 
 namespace LePortfolioApi.Validations;
