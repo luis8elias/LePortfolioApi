@@ -100,14 +100,6 @@ namespace LePortfolioApi.Controllers
         {
             try
             {
-                var validationResult = _validator.Validate(skill);
-                var errors = validationResult.Errors.AsQueryable().ProjectTo<ValidationError>(_mapper.ConfigurationProvider).ToList();
-                if (! validationResult.IsValid) 
-                {
-                    return BadRequest(ResponseManager.ErrorWithValidations("Petición incorrecta", errors));
-
-                }
-
 
                 var skillModel = _mapper.Map<SkillParamDto, Skill>(skill);
                 _context.Skills.Add(skillModel);
@@ -133,14 +125,7 @@ namespace LePortfolioApi.Controllers
             {
                 return NotFound(ResponseManager.NotFound("No existe un skill con este id"));
             }
-
-            var validationResult = _validator.Validate(skill);
-            var errors = validationResult.Errors.AsQueryable().ProjectTo<ValidationError>(_mapper.ConfigurationProvider).ToList();
-            if (!validationResult.IsValid)
-            {
-                return BadRequest(ResponseManager.ErrorWithValidations("Petición incorrecta", errors));
-
-            }
+           
 
             var skillModel = _mapper.Map<SkillParamDto, Skill>(skill);
             skillModel.Id = id;

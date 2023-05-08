@@ -11,8 +11,7 @@ namespace LePortfolioApi.Profiles
 
         public MapProfile()
         {
-
-            CreateMap<ValidationFailure, ValidationError>();
+          
             CreateMap<SkillParamDto, Skill>();
         }
             

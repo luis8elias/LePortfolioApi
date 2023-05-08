@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using LePortfolioApi.Seeders;
 using LePortfolioApi.Extensions;
 using LePortfolioApi.Data;
 using LePortfolioApi.Profiles;
 using FluentValidation;
-using System;
 using LePortfolioApi.Validations;
+using FluentValidation.AspNetCore;
+
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<EfContext>(options =>
@@ -17,7 +17,8 @@ builder.Services.AddDbContext<EfContext>(options =>
 
 builder.Services.AddAutoMapper(typeof(Profiles));
 builder.Services.AddValidatorsFromAssemblyContaining(typeof(Validations));
-builder.Services.AddControllers();
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddControllers().ConfigureApiBehaviorOptions(opt => opt.InvalidModelStateResponseFactory = AppValidator.MakeValidationResponse);
 builder.Services.AddTransient<IDatabaseSeeder, DatabaseSeeder>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
