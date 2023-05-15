@@ -11,6 +11,7 @@ namespace LePortfolioApi.Profiles
         {
           
             CreateMap<SkillParamDto, Skill>();
+            CreateMap<LinkParamDto, Link>();
         }
             
     }
