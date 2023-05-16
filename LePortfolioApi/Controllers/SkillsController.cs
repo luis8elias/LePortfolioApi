@@ -25,8 +25,8 @@ namespace LePortfolioApi.Controllers
         // GET: api/Skills
         [HttpGet("/Skills")]
         [ProducesResponseType(typeof(BasicResponse<IEnumerable<Skill>>), 200)]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(404)]
+        [ProducesResponseType(typeof(BasicResponse<IEnumerable<ValidationError>>), 400)]
+        [ProducesResponseType(typeof(BasicResponse<string>), 404)]
         public async Task<ActionResult<BasicResponse<IEnumerable<Skill>>>> GetSkills()
         {
          
@@ -58,8 +58,8 @@ namespace LePortfolioApi.Controllers
         //GET: api/Skills/5
         [HttpGet("/Skills/{id}")]
         [ProducesResponseType(typeof(BasicResponse<Skill>), 200)]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(404)]
+        [ProducesResponseType(typeof(BasicResponse<IEnumerable<ValidationError>>), 400)]
+        [ProducesResponseType(typeof(BasicResponse<string>), 404)]
         public async Task<ActionResult<BasicResponse<Skill>>> GetSkillById(int id)
         {
             try
@@ -89,9 +89,8 @@ namespace LePortfolioApi.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost("/Skills")]
         [ProducesResponseType(typeof(BasicResponse<Skill>), 201)]
-        [ProducesResponseType(typeof(BasicResponse<List<ValidationError>>), 400)]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(404)]
+        [ProducesResponseType(typeof(BasicResponse<IEnumerable<ValidationError>>), 400)]
+        [ProducesResponseType(typeof(BasicResponse<string>), 404)]
         public async Task<ActionResult<BasicResponse<Skill>>> PostSkill([FromBody] SkillParamDto skill)
         {
             try
@@ -114,8 +113,8 @@ namespace LePortfolioApi.Controllers
 
         [HttpPut("/Skills/{id}")]
         [ProducesResponseType(typeof(BasicResponse<Skill>), 200)]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(404)]
+        [ProducesResponseType(typeof(BasicResponse<IEnumerable<ValidationError>>), 400)]
+        [ProducesResponseType(typeof(BasicResponse<string>), 404)]
         public async Task<IActionResult> PutSkill(int id, [FromBody] SkillParamDto skill)
         {
             if (SkillNotExists(id))
@@ -144,8 +143,8 @@ namespace LePortfolioApi.Controllers
         // DELETE: api/Skills/5
         [HttpDelete("/Skills/{id}")]
         [ProducesResponseType(typeof(BasicResponse<string?>), 200)]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(404)]
+        [ProducesResponseType(typeof(BasicResponse<IEnumerable<ValidationError>>), 400)]
+        [ProducesResponseType(typeof(BasicResponse<string>), 404)]
         public async Task<IActionResult> DeleteSkill(int id)
         {
             try

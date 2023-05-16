@@ -25,8 +25,8 @@ namespace LePortfolioApi.Controllers
         // GET: api/Links
         [HttpGet("/Links")]
         [ProducesResponseType(typeof(BasicResponse<IEnumerable<Link>>), 200)]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(404)]
+        [ProducesResponseType(typeof(BasicResponse<IEnumerable<ValidationError>>), 400)]
+        [ProducesResponseType(typeof(BasicResponse<string>), 404)]
         public async Task<ActionResult<BasicResponse<IEnumerable<Link>>>> GetLinks()
         {
 
@@ -58,8 +58,8 @@ namespace LePortfolioApi.Controllers
         //GET: api/Links/5
         [HttpGet("/Links/{id}")]
         [ProducesResponseType(typeof(BasicResponse<Link>), 200)]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(404)]
+        [ProducesResponseType(typeof(BasicResponse<IEnumerable<ValidationError>>), 400)]
+        [ProducesResponseType(typeof(BasicResponse<string>), 404)]
         public async Task<ActionResult<BasicResponse<Link>>> GetLinkById(int id)
         {
             try
@@ -89,9 +89,8 @@ namespace LePortfolioApi.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost("/Links")]
         [ProducesResponseType(typeof(BasicResponse<Link>), 201)]
-        [ProducesResponseType(typeof(BasicResponse<List<ValidationError>>), 400)]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(404)]
+        [ProducesResponseType(typeof(BasicResponse<IEnumerable<ValidationError>>), 400)]
+        [ProducesResponseType(typeof(BasicResponse<string>), 404)]
         public async Task<ActionResult<BasicResponse<Link>>> PostLink([FromBody] LinkParamDto link)
         {
             try
@@ -114,8 +113,8 @@ namespace LePortfolioApi.Controllers
 
         [HttpPut("/Links/{id}")]
         [ProducesResponseType(typeof(BasicResponse<Link>), 200)]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(404)]
+        [ProducesResponseType(typeof(BasicResponse<IEnumerable<ValidationError>>), 400)]
+        [ProducesResponseType(typeof(BasicResponse<string>), 404)]
         public async Task<IActionResult> PutLink(int id, [FromBody] LinkParamDto link)
         {
             if (LinkNotExists(id))
@@ -144,8 +143,8 @@ namespace LePortfolioApi.Controllers
         // DELETE: api/Links/5
         [HttpDelete("/Links/{id}")]
         [ProducesResponseType(typeof(BasicResponse<string?>), 200)]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(404)]
+        [ProducesResponseType(typeof(BasicResponse<IEnumerable<ValidationError>>), 400)]
+        [ProducesResponseType(typeof(BasicResponse<string>), 404)]
         public async Task<IActionResult> DeleteLink(int id)
         {
             try

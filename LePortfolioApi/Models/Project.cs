@@ -6,11 +6,11 @@
         public string Title { get; set; } = default!;
         public string Description { get; set; } = default!;
 
-        public virtual List<ProjectImage> Images { get; set; } = default!;
+        public virtual List<Image> Images { get; set; } = default!;
 
         public virtual List<ProjectSkill> Technologies { get; set; } = default!;
 
-        public virtual List<ProjectLink> Links { get; set; } = default!;
+        public virtual List<Link> Links { get; set; } = default!;
 
     }
 }

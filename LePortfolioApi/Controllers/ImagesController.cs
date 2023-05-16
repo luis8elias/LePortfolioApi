@@ -25,8 +25,8 @@ namespace LePortfolioApi.Controllers
         // GET: api/Images
         [HttpGet("/Images")]
         [ProducesResponseType(typeof(BasicResponse<IEnumerable<Image>>), 200)]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(404)]
+        [ProducesResponseType(typeof(BasicResponse<IEnumerable<ValidationError>>),400)]
+        [ProducesResponseType(typeof(BasicResponse<string>), 404)]
         public async Task<ActionResult<BasicResponse<IEnumerable<Image>>>> GetImages()
         {
 
@@ -58,8 +58,8 @@ namespace LePortfolioApi.Controllers
         //GET: api/Images/5
         [HttpGet("/Images/{id}")]
         [ProducesResponseType(typeof(BasicResponse<Image>), 200)]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(404)]
+        [ProducesResponseType(typeof(BasicResponse<IEnumerable<ValidationError>>), 400)]
+        [ProducesResponseType(typeof(BasicResponse<string>), 404)]
         public async Task<ActionResult<BasicResponse<Image>>> GetImageById(int id)
         {
             try
@@ -89,9 +89,8 @@ namespace LePortfolioApi.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost("/Images")]
         [ProducesResponseType(typeof(BasicResponse<Image>), 201)]
-        [ProducesResponseType(typeof(BasicResponse<List<ValidationError>>), 400)]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(404)]
+        [ProducesResponseType(typeof(BasicResponse<IEnumerable<ValidationError>>), 400)]
+        [ProducesResponseType(typeof(BasicResponse<string>), 404)]
         public async Task<ActionResult<BasicResponse<Image>>> PostImage([FromBody] ImageParamDto image)
         {
             try
@@ -107,15 +106,14 @@ namespace LePortfolioApi.Controllers
             {
 
                 return ResponseManager.Error(e);
-
                 throw;
             }
         }
 
         [HttpPut("/Images/{id}")]
         [ProducesResponseType(typeof(BasicResponse<Image>), 200)]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(404)]
+        [ProducesResponseType(typeof(BasicResponse<IEnumerable<ValidationError>>), 400)]
+        [ProducesResponseType(typeof(BasicResponse<string>), 404)]
         public async Task<IActionResult> PutImage(int id, [FromBody] ImageParamDto image)
         {
             if (ImageNotExists(id))
@@ -144,8 +142,8 @@ namespace LePortfolioApi.Controllers
         // DELETE: api/Images/5
         [HttpDelete("/Images/{id}")]
         [ProducesResponseType(typeof(BasicResponse<string?>), 200)]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(404)]
+        [ProducesResponseType(typeof(BasicResponse<IEnumerable<ValidationError>>), 400)]
+        [ProducesResponseType(typeof(BasicResponse<string>), 404)]
         public async Task<IActionResult> DeleteImage(int id)
         {
             try

@@ -10,6 +10,7 @@ namespace LePortfolioApi.Validations
        public LinkValidation()
        {
             RuleFor(skill => skill.Value).NotNull().NotEmpty();
+            RuleFor(skill => skill.ProjectId).NotNull().NotEqual(0);
        }
         
     }

@@ -10,6 +10,7 @@ namespace LePortfolioApi.Validations
         public ImageValidation()
         {
             RuleFor(image => image.Url).NotNull().NotEmpty();
+            RuleFor(image => image.ProjectId).NotNull().NotEqual(0);
         }
 
     }

@@ -1,9 +1,7 @@
 ﻿namespace LePortfolioApi.ParamDtos
 {
-    public class ImageParamDto
+    public class ProjectImageParamDto
     {
         public string Url { get; set; } = default!;
-
-        public int ProjectId { get; set; }
     }
 }
