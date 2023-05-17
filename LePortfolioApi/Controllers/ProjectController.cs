@@ -14,7 +14,6 @@ namespace LePortfolioApi.Controllers
     [ApiController]
     public class ProjectController : ControllerBase
     {
-
         private readonly EfContext _context;
         private readonly IMapper _mapper;
 
@@ -31,35 +30,28 @@ namespace LePortfolioApi.Controllers
         [ProducesResponseType(typeof(BasicResponse<string>), 404)]
         public async Task<ActionResult<BasicResponse<IEnumerable<Project>>>> GetProjects()
         {
-
             try
             {
-
                 var projects = await _context.Projects
                     .Include(p => p.Images)
                     .Include(p => p.Links)
                     .Include(p => p.Technologies)
-                    .ThenInclude(t=> t.Skill )
+                    .ThenInclude(t => t.Skill)
                     .ProjectTo<ProjectDto>(_mapper.ConfigurationProvider)
                     .ToListAsync();
 
-            
                 if (projects == null)
                 {
                     return ResponseManager.NotFound("Sin Proyectos");
                 }
 
                 return ResponseManager.OK("Listado de proyectos", projects);
-
             }
             catch (Exception e)
             {
-
                 return ResponseManager.Error(e);
                 throw;
             }
-
-
         }
 
         //// POST: api/Projects
@@ -72,7 +64,6 @@ namespace LePortfolioApi.Controllers
         {
             try
             {
-
                 var projectModel = _mapper.Map<ProjectParamDto, Project>(project);
                 _context.Projects.Add(projectModel);
 
@@ -84,7 +75,6 @@ namespace LePortfolioApi.Controllers
 
                 await _context.SaveChangesAsync();
 
-
                 var projectDetailed = _context.Projects
                     .Where(p => p.Id == projectModel.Id)
                     .Include(p => p.Images)
@@ -94,13 +84,9 @@ namespace LePortfolioApi.Controllers
                     .ProjectTo<ProjectDto>(_mapper.ConfigurationProvider).First();
 
                 return ResponseManager.Created("Proyecto guardado", projectDetailed);
-
-
-
             }
             catch (Exception e)
             {
-
                 return ResponseManager.Error(e);
 
                 throw;

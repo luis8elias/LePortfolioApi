@@ -10,12 +10,9 @@ namespace LePortfolioApi.Profiles
 
         public MapProfile()
         {
-          
             CreateMap<SkillParamDto, Skill>();
-            CreateMap<Skill, Skill>();
-            CreateMap<ProjectSkill, Skill>().IncludeMembers(x => x.Skill);
-           
-
+            CreateMap<Skill, SkillDto>();
+            CreateMap<ProjectSkill, SkillDto>().IncludeMembers(x => x.Skill);
 
             CreateMap<Image, ImageDto>();
             CreateMap<LinkParamDto, Link>();
@@ -27,8 +24,6 @@ namespace LePortfolioApi.Profiles
             CreateMap<ProjectParamDto, Project>()
                 .ForMember(dest => dest.Technologies, act => act.Ignore());
             CreateMap<Project, ProjectDto>();
-                
         }
-            
     }
 }

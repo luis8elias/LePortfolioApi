@@ -9,8 +9,6 @@ namespace LePortfolioApi.Models
         public string Label { get; set; } = default!;
         public string Icon { get; set; } = default!;
 
-        [JsonIgnore]
-        public virtual ProjectSkill ProjectSkill { get; set; } = default!;
-
+        public ICollection<ProjectSkill> ProjectSkills { get; set; } = default!;
     }
 }

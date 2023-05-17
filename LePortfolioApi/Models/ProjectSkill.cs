@@ -11,13 +11,8 @@ namespace LePortfolioApi.Models
 
         public int SkillId { get; set; }
 
-       
-        [JsonIgnore]
-        public virtual Project Project { get; set; } = default!;
+        public Project Project { get; set; } = default!;
 
-        
-        [JsonIgnore]
-        [ForeignKey("SkillId")]
-        public virtual Skill Skill { get; set; } = default!;
+        public Skill Skill { get; set; } = default!;
     }
 }

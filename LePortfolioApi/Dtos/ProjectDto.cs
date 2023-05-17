@@ -8,10 +8,16 @@ namespace LePortfolioApi.Dtos
         public string Title { get; set; } = default!;
         public string Description { get; set; } = default!;
 
-        public virtual List<ImageDto> Images { get; set; } = default!;
+        public List<ImageDto> Images { get; set; } = default!;
 
-        public virtual List<Skill> Technologies { get; set; } = default!;
+        public  List<SkillDto> Technologies { get; set; } = default!;
 
-        public virtual List<LinkDto> Links { get; set; } = default!;
+        public  List<LinkDto> Links { get; set; } = default!;
+    }
+
+    public class SkillDto
+    {
+        public string Label { get; set; } = default!;
+        public string Icon { get; set; } = default!;
     }
 }

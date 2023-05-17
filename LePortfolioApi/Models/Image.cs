@@ -9,10 +9,6 @@ namespace LePortfolioApi.Models
 
         public int ProjectId { get; set; }
 
-
-        [JsonIgnore]
         public virtual Project Project { get; set; } = default!;
-
-
     }
 }
